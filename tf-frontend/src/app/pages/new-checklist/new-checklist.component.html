@@ -28,27 +28,43 @@
       </div>
 
       <div class="tf-form-field">
-        <label for="limitDate">Prazo (Opcional)</label>
-        <input tfInput id="limitDate" placeholder="DD/MM/AAAA" type="text" formControlName="limitDate" />
+        <label for="limit_date">Prazo (Opcional)</label>
+        <input matInput tfInput id="limit_date" placeholder="DD/MM/AAAA" type="text" formControlName="limit_date" readonly="true" [matDatepicker]="dpLimit" [min]="today" (click)="dpLimit.open()"
+        [class]="{
+          'tf-input-invalid': form.get('limit_date')?.invalid && form.get('limit_date')?.touched,
+          'tf-input-valid': form.get('limit_date')?.valid && form.get('limit_date')?.touched
+        }"
+        />
+        <mat-datepicker #dpLimit></mat-datepicker>
         <p>*Campo obrigatório</p>
       </div>
 
       <div class="checkboxes-container">
         <div>
-          <input tfInput id="changeColorByDate" type="checkbox" formControlName="changeColorByDate" class="checkbox" />
-          <label for="changeColorByDate">Ativar coloração por prazo </label>
+          <input tfInput id="change_color_by_date" type="checkbox" formControlName="change_color_by_date" (change)="changeLimitDateValidation($event)" />
+          <label for="change_color_by_date">Ativar coloração por prazo</label>
+          <mat-icon
+          clickableTooltip
+          matTooltip="Ative para que o sistema altere a cor da checklist automaticamente de acordo com o prazo. (Verde: +3 dias, Amarelo: 1 a 3 dias, Vermelho: 24 hr)."
+          matTooltipPosition="after"
+          >info</mat-icon>
         </div>
 
         <div>
-          <input tfInput id="showMotivationalMsg" type="checkbox" formControlName="showMotivationalMsg" class="checkbox" />
-          <label for="showMotivationalMsg">Mostrar mensagem motivacional </label>
+          <input tfInput id="show_motivational_msg" type="checkbox" formControlName="show_motivational_msg" />
+          <label for="show_motivational_msg">Mostrar mensagem motivacional</label>
+          <mat-icon
+          clickableTooltip
+          matTooltip="Ative para receber mensagens motivacionais durante e ao concluir suas tarefas!"
+          matTooltipPosition="after"
+          >info</mat-icon>
         </div>
       </div>
     </div>
 
     <div class="buttons-redirect-container">
-      <button tfButton color="primary" type="submit">Entrar</button>
-      <button tfButton color="secondary" type="reset">Limpar dados</button>
+      <button tfButton color="primary" type="submit">Criar checklist</button>
+      <button tfButton color="secondary" type="button" (click)="resetCheckboxes()">Limpar dados</button>
     </div>
   </form>
 </div>

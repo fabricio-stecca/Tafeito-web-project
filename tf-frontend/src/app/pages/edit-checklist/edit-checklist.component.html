@@ -1,0 +1,65 @@
+<img src="/images/icon_arrow_left.svg" alt="Seta para esquerda" (click)="cancelEdit(true)" class="return-arrow">
+
+<h4>Editar Checklist</h4>
+
+<div class="main-container">
+  <img src="/images/img_man_checking_list.png" alt="Figura de um homem marcando uma lista">
+
+  <form [formGroup]="form" (ngSubmit)="editChecklist()">
+    <div class="inputs-container">
+      <div class="tf-form-field">
+        <label for="name">Nome*</label>
+        <input tfInput id="name" placeholder="Insira seu nome completo" formControlName="name"
+        [class]="{
+          'tf-input-invalid': form.get('name')?.invalid && form.get('name')?.touched,
+          'tf-input-valid': form.get('name')?.valid && form.get('name')?.touched
+        }"
+        />
+      </div>
+
+      <div class="tf-form-field">
+        <label for="category">Categoria (Opcional)</label>
+        <input tfInput id="category" placeholder="Insira uma categoria" type="text" formControlName="category" />
+      </div>
+
+      <div class="tf-form-field">
+        <label for="description">Descrição (Opcional)</label>
+        <textarea id="description" placeholder="Insira uma descrição" formControlName="description"></textarea>
+      </div>
+
+      <div class="tf-form-field">
+        <label for="limit_date">Prazo (Opcional)</label>
+        <input matInput tfInput id="limit_date" placeholder="DD/MM/AAAA" type="text" formControlName="limit_date" readonly="true" [matDatepicker]="dpLimit" [min]="today" (click)="dpLimit.open()" />
+        <mat-datepicker #dpLimit></mat-datepicker>
+        <p>*Campo obrigatório</p>
+      </div>
+
+      <div class="checkboxes-container">
+        <div>
+          <input tfInput id="change_color_by_date" type="checkbox" formControlName="change_color_by_date" />
+          <label for="change_color_by_date">Ativar coloração por prazo</label>
+          <mat-icon
+          clickableTooltip
+          matTooltip="Ative para que o sistema altere a cor da checklist automaticamente de acordo com o prazo. (Verde: +3 dias, Amarelo: 1 a 3 dias, Vermelho: 24 hr)."
+          matTooltipPosition="after"
+          >info</mat-icon>
+        </div>
+
+        <div>
+          <input tfInput id="show_motivational_msg" type="checkbox" formControlName="show_motivational_msg" />
+          <label for="show_motivational_msg">Mostrar mensagem motivacional</label>
+          <mat-icon
+          clickableTooltip
+          matTooltip="Ative para receber mensagens motivacionais durante e ao concluir suas tarefas!"
+          matTooltipPosition="after"
+          >info</mat-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="buttons-redirect-container">
+      <button tfButton color="primary" type="submit">Salvar checklist</button>
+      <button tfButton color="secondary" type="button" (click)="cancelEdit()">Cancelar</button>
+    </div>
+  </form>
+</div>

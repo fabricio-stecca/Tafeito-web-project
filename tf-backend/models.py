@@ -39,6 +39,15 @@ class ChecklistItemBase(BaseModel):
 class ChecklistItemCreate(ChecklistItemBase):
     pass
 
+class ChecklistItemUpdate(BaseModel):
+    id: Optional[str] = None  # None for new items
+    title: str
+    completed: bool = False
+    description: Optional[str] = None
+
+class ChecklistItemsBulkUpdate(BaseModel):
+    items: List[ChecklistItemUpdate]
+
 class ChecklistItem(ChecklistItemBase):
     id: str
     checklist_id: str
@@ -84,3 +93,11 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: Optional[str] = None
+
+class UserUpdate(BaseModel):
+    name: Optional[str] = None
+    phone: Optional[str] = None
+
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str
